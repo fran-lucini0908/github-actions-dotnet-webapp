@@ -1,0 +1,43 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main  # Acionado em pushes para o branch main
+  schedule:
+    - cron: '0 * * * *'  # Agendado para rodar a cada hora
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Utiliza uma action pré-existente para fazer checkout do código
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Exemplo de action pré-existente para configurar o Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    # Script personalizado
+    - name: Run custom script
+      run: |
+        echo "Running custom script..."
+        # Seu script personalizado aqui
+        node -e "console.log('Hello, world!')"
+
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run custom script
+      run: |
+        echo "Running custom script on schedule..."
+        # Seu script personalizado aqui
+        node -e "console.log('Scheduled task running!')"
+
